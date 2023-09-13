@@ -113,3 +113,21 @@ run:
 
 .PHONY: run
 ```
+
+Finally, create a text file:
+
+```
+touch urls.txt
+```
+
+And insert the following:
+
+```
+http://go.dev
+http://google.com
+http://yahoo.com
+http://wikipedia.com
+http://bing.com
+```
+
+[Next](001.md)
