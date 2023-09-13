@@ -6,6 +6,3 @@ run:
 debug:
 	dlv debug
 
-.PHONY: debug-with-redirect
-debug-with-redirect:
-	dlv debug -r stdin:urls.txt
