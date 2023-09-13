@@ -108,10 +108,9 @@ touch Makefile
 And insert the following:
 
 ```
+.PHONY: run
 run:
     go run main.go < urls.txt
-
-.PHONY: run
 ```
 
 Finally, create a text file:
