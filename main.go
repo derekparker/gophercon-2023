@@ -50,7 +50,6 @@ func worker(id int, urls <-chan string, results chan<- int) {
 func main() {
 	var (
 		finalResult int
-		numJobs     int
 
 		workers = 5
 		urls    = make(chan string)
@@ -64,7 +63,6 @@ func main() {
 	}
 	for scanner.Scan() {
 		urls <- scanner.Text()
-		numJobs++
 	}
 	close(urls)
 	for num := range results {
@@ -72,10 +70,6 @@ func main() {
 	}
 	t := time.Now()
 	elapsed := t.Sub(start)
-	for i := 1; i <= numJobs; i++ {
-		oneResult := <-results
-		finalResult += oneResult
-	}
 	fmt.Println("Number = ", finalResult)
 	fmt.Println("Time = ", elapsed)
 	if err := scanner.Err(); err != nil {
