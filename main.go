@@ -57,7 +57,7 @@ func main() {
 
 		workers = 5
 		urls    = make(chan string)
-		results = make(chan int)
+		results = make(chan int, 5)
 	)
 
 	scanner := bufio.NewScanner(os.Stdin)

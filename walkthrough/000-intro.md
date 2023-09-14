@@ -108,9 +108,13 @@ touch Makefile
 And insert the following:
 
 ```
+.PHONY: build
+build:
+	go build
+
 .PHONY: run
-run:
-    go run main.go < urls.txt
+run: build
+	./gc2023 < urls.txt
 ```
 
 Finally, create a text file:
