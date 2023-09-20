@@ -1,7 +1,9 @@
 package count
 
 import (
+	"fmt"
 	"io"
+	"net/http"
 	"os"
 	"strings"
 	"sync"
@@ -9,7 +11,7 @@ import (
 
 // Job is a single job to be performed.
 type Job struct {
-	url string
+	Url string
 }
 
 // ParseURLsFromFile takes a path to a text file containing
@@ -31,7 +33,7 @@ func ParseURLsFromFile(path string) ([]*Job, error) {
 
 	jobs := make([]*Job, len(urls))
 	for _, url := range urls {
-		jobs = append(jobs, &Job{url: url})
+		jobs = append(jobs, &Job{Url: url})
 	}
 
 	return jobs, nil
@@ -43,4 +45,35 @@ func Worker(wg *sync.WaitGroup, id int, urls <-chan string, results chan<- int) 
 	for url := range urls {
 		results <- doWork(id, url)
 	}
+}
+
+func doWork(id int, url string) int {
+	var data string
+	fmt.Println("worker", id, "started  job", url)
+	if strings.HasPrefix(url, "http") || strings.HasPrefix(url, "https") {
+		resp, err := http.Get(url)
+		if err != nil {
+			fmt.Println(err)
+		}
+		defer func(Body io.ReadCloser) {
+			err := Body.Close()
+			if err != nil {
+				_, _ = fmt.Fprintf(os.Stderr, "unable to close response body: %v", err)
+			}
+		}(resp.Body)
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			fmt.Println(err)
+		}
+		data = string(body)
+	} else {
+		body, err := os.ReadFile(url)
+		if err != nil {
+			fmt.Println(err)
+		}
+		data = string(body)
+	}
+	number := strings.Count(data, "Go")
+	fmt.Println("worker", id, "finished  job", url, "Number of Go is", number)
+	return number
 }

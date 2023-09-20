@@ -11,7 +11,7 @@ func TestParseURLsFromFile(t *testing.T) {
 	assert.Nil(t, err)
 
 	// Assert the URLs are parsed in the correct order as we expect.
-	assert.Equal(t, "http://google.com", jobs[0].url)
-	assert.Equal(t, "http://yahoo.com", jobs[1].url)
-	assert.Equal(t, "http://go.dev", jobs[2].url)
+	assert.Equal(t, "http://google.com", jobs[0].Url)
+	assert.Equal(t, "http://yahoo.com", jobs[1].Url)
+	assert.Equal(t, "http://go.dev", jobs[2].Url)
 }
