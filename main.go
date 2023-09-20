@@ -41,7 +41,6 @@ func main() {
 	close(urls)
 
 	wg.Wait()
-	close(results)
 
 	for num := range results {
 		finalResult += num
