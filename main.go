@@ -10,7 +10,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/derekparker/gophercon-2023/counter"
+	"github.com/derekparker/gophercon-2023/count"
 )
 
 func doWork(id int, url string) int {
@@ -57,7 +57,7 @@ func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	start := time.Now()
 	for w := 1; w <= workers; w++ {
-		go counter.Worker(&wg, w, urls, results)
+		go count.Worker(&wg, w, urls, results)
 	}
 	for scanner.Scan() {
 		urls <- scanner.Text()
