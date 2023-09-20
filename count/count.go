@@ -4,6 +4,7 @@ import (
 	"io"
 	"os"
 	"strings"
+	"sync"
 )
 
 // Job is a single job to be performed.
@@ -34,4 +35,12 @@ func ParseURLsFromFile(path string) ([]*Job, error) {
 	}
 
 	return jobs, nil
+}
+
+func Worker(wg *sync.WaitGroup, id int, urls <-chan string, results chan<- int) {
+	wg.Add(1)
+	defer wg.Done()
+	for url := range urls {
+		results <- doWork(id, url)
+	}
 }
