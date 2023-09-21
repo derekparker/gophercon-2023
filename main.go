@@ -19,7 +19,7 @@ func main() {
 
 		workers = 5
 		urls    = make(chan string)
-		results = make(chan int, 5)
+		results = make(chan int)
 	)
 
 	flag.StringVar(&path, "path", "", "text file containing list of URLs to scan")
