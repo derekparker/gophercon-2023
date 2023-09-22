@@ -1,0 +1,7 @@
+FROM golang:latest
+
+COPY . /src
+
+RUN go install github.com/go-delve/delve/cmd/dlv@latest
+
+CMD ["dlv", "attach", "1"]
