@@ -19,7 +19,6 @@ func main() {
 
 		workers = 5
 		urls    = make(chan string)
-		results = make(chan int)
 	)
 
 	flag.StringVar(&path, "path", "", "text file containing list of URLs to scan")
@@ -31,6 +30,8 @@ func main() {
 		os.Exit(1)
 	}
 
+	results := make(chan int, len(jobs))
+
 	start := time.Now()
 	for w := 1; w <= workers; w++ {
 		go count.Worker(&wg, w, urls, results)
@@ -41,6 +42,8 @@ func main() {
 	close(urls)
 
 	wg.Wait()
+
+	close(results)
 
 	for num := range results {
 		finalResult += num

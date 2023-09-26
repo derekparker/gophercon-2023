@@ -31,7 +31,7 @@ func ParseURLsFromFile(path string) ([]*Job, error) {
 	list := string(b)
 	urls := strings.Split(list, "\n")
 
-	jobs := make([]*Job, len(urls))
+	jobs := make([]*Job, 0, len(urls))
 	for _, url := range urls {
 		jobs = append(jobs, &Job{Url: url})
 	}

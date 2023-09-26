@@ -1,0 +1,233 @@
+(dlv) continue
+received SIGINT, stopping process (will not forward signal)
+Stopped at: 0x18a8f7750
+=>   1:	no source available
+(dlv) goroutines
+  Goroutine 1 - User: /Users/derekparker/Code/goroot/src/runtime/sema.go:62 sync.runtime_Semacquire (0x1024d677c) [semacquire 1030406749915208]
+  Goroutine 2 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1024abf00) [force gc (idle) 1030406749915208]
+  Goroutine 3 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1024abf00) [GC sweep wait]
+  Goroutine 4 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1024abf00) [GC scavenge wait]
+  Goroutine 9 - User: /Users/derekparker/Code/goroot/src/net/fd_posix.go:55 net.(*netFD).Read (0x10263af34) [IO wait]
+  Goroutine 18 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1024abf00) [finalizer wait 1030406749915208]
+  Goroutine 19 - User: ./count/count.go:46 github.com/derekparker/gophercon-2023/count.Worker (0x1027546c8) [chan send 1030406749915208]
+  Goroutine 20 - User: ./count/count.go:46 github.com/derekparker/gophercon-2023/count.Worker (0x1027546c8) [chan send 1030406749915208]
+  Goroutine 22 - User: ./count/count.go:46 github.com/derekparker/gophercon-2023/count.Worker (0x1027546c8) [chan send 1030406749915208]
+  Goroutine 23 - User: ./count/count.go:46 github.com/derekparker/gophercon-2023/count.Worker (0x1027546c8) [chan send]
+  Goroutine 28 - User: /Users/derekparker/Code/goroot/src/net/fd_posix.go:55 net.(*netFD).Read (0x10263af34) [IO wait 1030406749915208]
+  Goroutine 29 - User: /Users/derekparker/Code/goroot/src/net/http/transport.go:2421 net/http.(*persistConn).writeLoop (0x102745d1c) [select 1030406749915208]
+  Goroutine 39 - User: /Users/derekparker/Code/goroot/src/net/fd_posix.go:55 net.(*netFD).Read (0x10263af34) [IO wait 1030406749915208]
+  Goroutine 40 - User: /Users/derekparker/Code/goroot/src/net/http/transport.go:2421 net/http.(*persistConn).writeLoop (0x102745d1c) [select 1030406749915208]
+  Goroutine 48 - User: /Users/derekparker/Code/goroot/src/net/fd_posix.go:55 net.(*netFD).Read (0x10263af34) [IO wait 1030406749915208]
+  Goroutine 49 - User: /Users/derekparker/Code/goroot/src/net/http/transport.go:2421 net/http.(*persistConn).writeLoop (0x102745d1c) [select 1030406749915208]
+  Goroutine 58 - User: /Users/derekparker/Code/goroot/src/net/fd_posix.go:55 net.(*netFD).Read (0x10263af34) [IO wait 1030406749915208]
+  Goroutine 60 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1024abf00) [debug call 1030406749915208]
+  Goroutine 61 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1024abf00) [debug call 1030406749915208]
+  Goroutine 62 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1024abf00) [debug call]
+  Goroutine 63 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1024abf00) [debug call 1030407352452000]
+  Goroutine 64 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1024abf00) [debug call 1030407352452000]
+  Goroutine 65 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1024abf00) [debug call]
+  Goroutine 70 - User: /Users/derekparker/Code/goroot/src/net/fd_posix.go:55 net.(*netFD).Read (0x10263af34) [IO wait 1030406749915208]
+  Goroutine 73 - User: /Users/derekparker/Code/goroot/src/net/fd_posix.go:55 net.(*netFD).Read (0x10263af34) [IO wait 1030406749915208]
+  Goroutine 80 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1024abf00) [debug call 1030407352452000]
+  Goroutine 100 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1024abf00) [debug call 1030406749915208]
+[27 goroutines]
+(dlv) goroutine 1
+Switched from 0 to 1 (thread 8328506)
+(dlv) stack
+0  0x00000001024abf00 in runtime.gopark
+   at /Users/derekparker/Code/goroot/src/runtime/proc.go:399
+1  0x00000001024abf94 in runtime.goparkunlock
+   at /Users/derekparker/Code/goroot/src/runtime/proc.go:404
+2  0x00000001024bc458 in runtime.semacquire1
+   at /Users/derekparker/Code/goroot/src/runtime/sema.go:160
+3  0x00000001024d677c in sync.runtime_Semacquire
+   at /Users/derekparker/Code/goroot/src/runtime/sema.go:62
+4  0x00000001024fdee8 in sync.(*WaitGroup).Wait
+   at /Users/derekparker/Code/goroot/src/sync/waitgroup.go:116
+5  0x00000001027555ec in main.main
+   at ./main.go:43
+6  0x00000001024abaa4 in runtime.main
+   at /Users/derekparker/Code/goroot/src/runtime/proc.go:267
+7  0x00000001024daa04 in runtime.goexit
+   at /Users/derekparker/Code/goroot/src/runtime/asm_arm64.s:1197
+(dlv) frame 5 list
+Goroutine 1 frame 5 at /Users/derekparker/Code/gophercon-2023/main.go:43 (PC: 0x1027555ec)
+    38:		for _, job := range jobs {
+    39:			urls <- job.Url
+    40:		}
+    41:		close(urls)
+    42:	
+=>  43:		wg.Wait()
+    44:	
+    45:		for num := range results {
+    46:			finalResult += num
+    47:		}
+    48:	
+(dlv) frame 5
+> runtime.gopark() /Users/derekparker/Code/goroot/src/runtime/proc.go:399 (PC: 0x1024abf00)
+Warning: debugging optimized function
+Frame 5: ./main.go:43 (PC: 1027555ec)
+    38:		for _, job := range jobs {
+    39:			urls <- job.Url
+    40:		}
+    41:		close(urls)
+    42:	
+=>  43:		wg.Wait()
+    44:	
+    45:		for num := range results {
+    46:			finalResult += num
+    47:		}
+    48:	
+(dlv) ls
+Goroutine 1 frame 5 at /Users/derekparker/Code/gophercon-2023/main.go:43 (PC: 0x1027555ec)
+    38:		for _, job := range jobs {
+    39:			urls <- job.Url
+    40:		}
+    41:		close(urls)
+    42:	
+=>  43:		wg.Wait()
+    44:	
+    45:		for num := range results {
+    46:			finalResult += num
+    47:		}
+    48:	
+(dlv) print results
+chan int {
+	qcount: 0,
+	dataqsiz: 0,
+	buf: *[0]int [],
+	elemsize: 8,
+	closed: 0,
+	elemtype: *internal/abi.Type {Size_: 8, PtrBytes: 0, Hash: 3413333906, TFlag: TFlagUncommon|TFlagExtraStar|TFlagNamed|TFlagRegularMemory (15), Align_: 8, FieldAlign_: 8, Kind_: 2, Equal: runtime.memequal64, GCData: *0, Str: 2028, PtrToThis: 81024},
+	sendx: 0,
+	recvx: 0,
+	recvq: waitq<int> {
+		first: *sudog<int> nil,
+		last: *sudog<int> nil,},
+	sendq: waitq<int> {
+		first: *(*sudog<int>)(0x14000108060),
+		last: *(*sudog<int>)(0x140003d0000),},
+	lock: runtime.mutex {
+		lockRankStruct: runtime.lockRankStruct {},
+		key: 0,},}
+
+Goroutines waiting on this channel:
+  Goroutine 22 - User: ./count/count.go:46 github.com/derekparker/gophercon-2023/count.Worker (0x1027546c8) [chan send 1030406749915208]
+  Goroutine 19 - User: ./count/count.go:46 github.com/derekparker/gophercon-2023/count.Worker (0x1027546c8) [chan send 1030406749915208]
+  Goroutine 20 - User: ./count/count.go:46 github.com/derekparker/gophercon-2023/count.Worker (0x1027546c8) [chan send 1030406749915208]
+  Goroutine 23 - User: ./count/count.go:46 github.com/derekparker/gophercon-2023/count.Worker (0x1027546c8) [chan send]
+(dlv) print cap(results)
+0
+(dlv) list
+Goroutine 1 frame 5 at /Users/derekparker/Code/gophercon-2023/main.go:43 (PC: 0x1027555ec)
+    38:		for _, job := range jobs {
+    39:			urls <- job.Url
+    40:		}
+    41:		close(urls)
+    42:	
+=>  43:		wg.Wait()
+    44:	
+    45:		for num := range results {
+    46:			finalResult += num
+    47:		}
+    48:	
+(dlv) edit
+(dlv) rebuild
+(dlv) continue
+received SIGINT, stopping process (will not forward signal)
+Switch target process from 54734 to 55052 (/Users/derekparker/Code/gophercon-2023/__debug_bin2834434948 -path=./count/testdata/urls.txt)
+Stopped at: 0x18a8f7750
+=>   1:	no source available
+(dlv) goroutines
+  Goroutine 1 - User: ./main.go:46 main.main (0x102b69608) [chan receive]
+  Goroutine 2 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1028bff00) [force gc (idle) 1030888236694666]
+  Goroutine 3 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1028bff00) [GC sweep wait]
+  Goroutine 4 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1028bff00) [GC scavenge wait]
+  Goroutine 5 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1028bff00) [finalizer wait 1030888236694666]
+  Goroutine 11 - User: /Users/derekparker/Code/goroot/src/net/fd_posix.go:55 net.(*netFD).Read (0x102a4ef34) [IO wait 1030888236694666]
+  Goroutine 12 - User: /Users/derekparker/Code/goroot/src/net/http/transport.go:2421 net/http.(*persistConn).writeLoop (0x102b59d1c) [select 1030888236694666]
+  Goroutine 26 - User: /Users/derekparker/Code/goroot/src/net/fd_posix.go:55 net.(*netFD).Read (0x102a4ef34) [IO wait 1030888236694666]
+  Goroutine 27 - User: /Users/derekparker/Code/goroot/src/net/http/transport.go:2421 net/http.(*persistConn).writeLoop (0x102b59d1c) [select 1030888236694666]
+  Goroutine 29 - User: /Users/derekparker/Code/goroot/src/net/fd_posix.go:55 net.(*netFD).Read (0x102a4ef34) [IO wait 1030888236694666]
+  Goroutine 48 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1028bff00) [debug call 1030888236694666]
+  Goroutine 49 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1028bff00) [debug call]
+  Goroutine 53 - User: /Users/derekparker/Code/goroot/src/net/fd_posix.go:55 net.(*netFD).Read (0x102a4ef34) [IO wait 1030888236694666]
+  Goroutine 54 - User: /Users/derekparker/Code/goroot/src/net/http/transport.go:2421 net/http.(*persistConn).writeLoop (0x102b59d1c) [select 1030888236694666]
+  Goroutine 55 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1028bff00) [debug call]
+  Goroutine 80 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1028bff00) [debug call 1030888236694666]
+  Goroutine 84 - User: /Users/derekparker/Code/goroot/src/net/fd_posix.go:55 net.(*netFD).Read (0x102a4ef34) [IO wait 1030888236694666]
+  Goroutine 88 - User: /Users/derekparker/Code/goroot/src/net/fd_posix.go:55 net.(*netFD).Read (0x102a4ef34) [IO wait 1030888236694666]
+  Goroutine 90 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1028bff00) [debug call 1030888236694666]
+  Goroutine 91 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1028bff00) [debug call]
+  Goroutine 96 - User: /Users/derekparker/Code/goroot/src/net/fd_posix.go:55 net.(*netFD).Read (0x102a4ef34) [IO wait 1030888828248375]
+  Goroutine 98 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1028bff00) [debug call 1030888828248375]
+  Goroutine 99 - User: /Users/derekparker/Code/goroot/src/runtime/proc.go:399 runtime.gopark (0x1028bff00) [debug call]
+[23 goroutines]
+(dlv) goroutine 1
+Switched from 0 to 1 (thread 8333291)
+(dlv) list
+> runtime.gopark() /Users/derekparker/Code/goroot/src/runtime/proc.go:399 (PC: 0x1028bff00)
+Warning: debugging optimized function
+   394:		mp.waitTraceBlockReason = traceReason
+   395:		mp.waitTraceSkip = traceskip
+   396:		releasem(mp)
+   397:		// can't do anything that might move the G between Ms here.
+   398:		mcall(park_m)
+=> 399:	}
+   400:	
+   401:	// Puts the current goroutine into a waiting state and unlocks the lock.
+   402:	// The goroutine can be made runnable again by calling goready(gp).
+   403:	func goparkunlock(lock *mutex, reason waitReason, traceReason traceBlockReason, traceskip int) {
+   404:		gopark(parkunlock_c, unsafe.Pointer(lock), reason, traceReason, traceskip)
+(dlv) stack
+0  0x00000001028bff00 in runtime.gopark
+   at /Users/derekparker/Code/goroot/src/runtime/proc.go:399
+1  0x000000010288b7dc in runtime.chanrecv
+   at /Users/derekparker/Code/goroot/src/runtime/chan.go:583
+2  0x000000010288b544 in runtime.chanrecv2
+   at /Users/derekparker/Code/goroot/src/runtime/chan.go:447
+3  0x0000000102b69608 in main.main
+   at ./main.go:46
+4  0x00000001028bfaa4 in runtime.main
+   at /Users/derekparker/Code/goroot/src/runtime/proc.go:267
+5  0x00000001028eea04 in runtime.goexit
+   at /Users/derekparker/Code/goroot/src/runtime/asm_arm64.s:1197
+(dlv) frame 3 list
+Goroutine 1 frame 3 at /Users/derekparker/Code/gophercon-2023/main.go:46 (PC: 0x102b69608)
+    41:		}
+    42:		close(urls)
+    43:	
+    44:		wg.Wait()
+    45:	
+=>  46:		for num := range results {
+    47:			finalResult += num
+    48:		}
+    49:	
+    50:		t := time.Now()
+    51:		elapsed := t.Sub(start)
+(dlv) frame 3 print results
+chan int {
+	qcount: 0,
+	dataqsiz: 4,
+	buf: *[4]int [0,0,0,0],
+	elemsize: 8,
+	closed: 0,
+	elemtype: *internal/abi.Type {Size_: 8, PtrBytes: 0, Hash: 3413333906, TFlag: TFlagUncommon|TFlagExtraStar|TFlagNamed|TFlagRegularMemory (15), Align_: 8, FieldAlign_: 8, Kind_: 2, Equal: runtime.memequal64, GCData: *0, Str: 2028, PtrToThis: 81024},
+	sendx: 0,
+	recvx: 0,
+	recvq: waitq<int> {
+		first: *(*sudog<int>)(0x14000072000),
+		last: *(*sudog<int>)(0x14000072000),},
+	sendq: waitq<int> {
+		first: *sudog<int> nil,
+		last: *sudog<int> nil,},
+	lock: runtime.mutex {
+		lockRankStruct: runtime.lockRankStruct {},
+		key: 0,},}
+
+Goroutines waiting on this channel:
+* Goroutine 1 - User: ./main.go:46 main.main (0x102b69608) [chan receive]
+(dlv) frame 3 edit
+(dlv) rebuild
+(dlv) continue
+(dlv) exit

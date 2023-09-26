@@ -1,0 +1,192 @@
+(dlv) continue
+> [unrecovered-panic] runtime.fatalpanic() /Users/derekparker/Code/goroot/src/runtime/panic.go:1188 (hits goroutine(1):1 total:1) (PC: 0x104aa7f70)
+Warning: debugging optimized function
+	runtime.curg._panic.arg: interface {}(string) "runtime error: index out of range [1] with length 1"
+  1183:	// fatalpanic implements an unrecoverable panic. It is like fatalthrow, except
+  1184:	// that if msgs != nil, fatalpanic also prints panic messages and decrements
+  1185:	// runningPanicDefers once main is blocked from exiting.
+  1186:	//
+  1187:	//go:nosplit
+=>1188:	func fatalpanic(msgs *_panic) {
+  1189:		pc := getcallerpc()
+  1190:		sp := getcallersp()
+  1191:		gp := getg()
+  1192:		var docrash bool
+  1193:		// Switch to the system stack to avoid any stack growth, which
+(dlv) stack
+0  0x0000000104aa7f70 in runtime.fatalpanic
+   at /Users/derekparker/Code/goroot/src/runtime/panic.go:1188
+1  0x0000000104aa7888 in runtime.gopanic
+   at /Users/derekparker/Code/goroot/src/runtime/panic.go:1017
+2  0x0000000104aa5ccc in runtime.goPanicIndex
+   at /Users/derekparker/Code/goroot/src/runtime/panic.go:114
+3  0x0000000104b15074 in main.main
+   at ./main.go:11
+4  0x0000000104aaa1c4 in runtime.main
+   at /Users/derekparker/Code/goroot/src/runtime/proc.go:267
+5  0x0000000104ad4b34 in runtime.goexit
+   at /Users/derekparker/Code/goroot/src/runtime/asm_arm64.s:1197
+(dlv) list
+> [unrecovered-panic] runtime.fatalpanic() /Users/derekparker/Code/goroot/src/runtime/panic.go:1188 (hits goroutine(1):1 total:1) (PC: 0x104aa7f70)
+Warning: debugging optimized function
+  1183:	// fatalpanic implements an unrecoverable panic. It is like fatalthrow, except
+  1184:	// that if msgs != nil, fatalpanic also prints panic messages and decrements
+  1185:	// runningPanicDefers once main is blocked from exiting.
+  1186:	//
+  1187:	//go:nosplit
+=>1188:	func fatalpanic(msgs *_panic) {
+  1189:		pc := getcallerpc()
+  1190:		sp := getcallersp()
+  1191:		gp := getg()
+  1192:		var docrash bool
+  1193:		// Switch to the system stack to avoid any stack growth, which
+(dlv) list main.go:11
+Showing /Users/derekparker/Code/gophercon-2023/walkthroughs/cmds/debug/main.go:11 (PC: 0x104b15030)
+     6:	)
+     7:	
+     8:	func main() {
+     9:		fmt.Println("Hello Gophers! Pass me a word and I will print the last character!")
+    10:	
+    11:		arg := os.Args[1]
+    12:	
+    13:		fmt.Printf("The last character in that word is: %c\n", arg[len(arg)])
+    14:	}
+(dlv) frame 3 list
+Goroutine 1 frame 3 at /Users/derekparker/Code/gophercon-2023/walkthroughs/cmds/debug/main.go:11 (PC: 0x104b15074)
+     6:	)
+     7:	
+     8:	func main() {
+     9:		fmt.Println("Hello Gophers! Pass me a word and I will print the last character!")
+    10:	
+=>  11:		arg := os.Args[1]
+    12:	
+    13:		fmt.Printf("The last character in that word is: %c\n", arg[len(arg)])
+    14:	}
+(dlv) frame 3 args
+(no args)
+(dlv) frame 3 locals
+(no locals)
+(dlv) 
+(no locals)
+(dlv) list
+> [unrecovered-panic] runtime.fatalpanic() /Users/derekparker/Code/goroot/src/runtime/panic.go:1188 (hits goroutine(1):1 total:1) (PC: 0x104aa7f70)
+Warning: debugging optimized function
+  1183:	// fatalpanic implements an unrecoverable panic. It is like fatalthrow, except
+  1184:	// that if msgs != nil, fatalpanic also prints panic messages and decrements
+  1185:	// runningPanicDefers once main is blocked from exiting.
+  1186:	//
+  1187:	//go:nosplit
+=>1188:	func fatalpanic(msgs *_panic) {
+  1189:		pc := getcallerpc()
+  1190:		sp := getcallersp()
+  1191:		gp := getg()
+  1192:		var docrash bool
+  1193:		// Switch to the system stack to avoid any stack growth, which
+(dlv) print os.Args
+[]string len: 1, cap: 1, [
+	"/Users/derekparker/Code/gophercon-2023/walkthroughs/cmds/debug/_...+19 more",
+]
+(dlv) print os.Args[0]
+"/Users/derekparker/Code/gophercon-2023/walkthroughs/cmds/debug/_...+19 more"
+(dlv) list
+> [unrecovered-panic] runtime.fatalpanic() /Users/derekparker/Code/goroot/src/runtime/panic.go:1188 (hits goroutine(1):1 total:1) (PC: 0x104aa7f70)
+Warning: debugging optimized function
+  1183:	// fatalpanic implements an unrecoverable panic. It is like fatalthrow, except
+  1184:	// that if msgs != nil, fatalpanic also prints panic messages and decrements
+  1185:	// runningPanicDefers once main is blocked from exiting.
+  1186:	//
+  1187:	//go:nosplit
+=>1188:	func fatalpanic(msgs *_panic) {
+  1189:		pc := getcallerpc()
+  1190:		sp := getcallersp()
+  1191:		gp := getg()
+  1192:		var docrash bool
+  1193:		// Switch to the system stack to avoid any stack growth, which
+(dlv) frame 3 list
+Goroutine 1 frame 3 at /Users/derekparker/Code/gophercon-2023/walkthroughs/cmds/debug/main.go:11 (PC: 0x104b15074)
+     6:	)
+     7:	
+     8:	func main() {
+     9:		fmt.Println("Hello Gophers! Pass me a word and I will print the last character!")
+    10:	
+=>  11:		arg := os.Args[1]
+    12:	
+    13:		fmt.Printf("The last character in that word is: %c\n", arg[len(arg)])
+    14:	}
+(dlv) frame 3 edit
+(dlv) help restart
+Restart process.
+
+For recorded targets the command takes the following forms:
+
+	restart					resets to the start of the recording
+	restart [checkpoint]			resets the recording to the given checkpoint
+	restart -r [newargv...]	[redirects...]	re-records the target process
+	
+For live targets the command takes the following forms:
+
+	restart [newargv...] [redirects...]	restarts the process
+
+If newargv is omitted the process is restarted (or re-recorded) with the same argument vector.
+If -noargs is specified instead, the argument vector is cleared.
+
+A list of file redirections can be specified after the new argument list to override the redirections defined using the '--redirect' command line option. A syntax similar to Unix shells is used:
+
+	<input.txt	redirects the standard input of the target process from input.txt
+	>output.txt	redirects the standard output of the target process to output.txt
+	2>error.txt	redirects the standard error of the target process to error.txt
+
+(dlv) rebuild
+(dlv) list
+Switch target process from 44641 to 45198 (/Users/derekparker/Code/gophercon-2023/walkthroughs/cmds/debug/__debug_bin390749281)
+Stopped at: 0x104a1ca40
+=>   1:	no source available
+(dlv) continue
+(dlv) restart "debugging is so fun"
+Process restarted with PID 45351
+(dlv) continue
+> [unrecovered-panic] runtime.fatalpanic() /Users/derekparker/Code/goroot/src/runtime/panic.go:1188 (hits goroutine(1):1 total:1) (PC: 0x104fd7f70)
+Warning: debugging optimized function
+	runtime.curg._panic.arg: interface {}(string) "runtime error: index out of range [19] with length 19"
+  1183:	// fatalpanic implements an unrecoverable panic. It is like fatalthrow, except
+  1184:	// that if msgs != nil, fatalpanic also prints panic messages and decrements
+  1185:	// runningPanicDefers once main is blocked from exiting.
+  1186:	//
+  1187:	//go:nosplit
+=>1188:	func fatalpanic(msgs *_panic) {
+  1189:		pc := getcallerpc()
+  1190:		sp := getcallersp()
+  1191:		gp := getg()
+  1192:		var docrash bool
+  1193:		// Switch to the system stack to avoid any stack growth, which
+(dlv) stack
+0  0x0000000104fd7f70 in runtime.fatalpanic
+   at /Users/derekparker/Code/goroot/src/runtime/panic.go:1188
+1  0x0000000104fd7888 in runtime.gopanic
+   at /Users/derekparker/Code/goroot/src/runtime/panic.go:1017
+2  0x0000000104fd5ccc in runtime.goPanicIndex
+   at /Users/derekparker/Code/goroot/src/runtime/panic.go:114
+3  0x00000001050452fc in main.main
+   at ./main.go:18
+4  0x0000000104fda1c4 in runtime.main
+   at /Users/derekparker/Code/goroot/src/runtime/proc.go:267
+5  0x0000000105004b94 in runtime.goexit
+   at /Users/derekparker/Code/goroot/src/runtime/asm_arm64.s:1197
+(dlv) frame 3 list
+Goroutine 1 frame 3 at /Users/derekparker/Code/gophercon-2023/walkthroughs/cmds/debug/main.go:18 (PC: 0x1050452fc)
+    13:			os.Exit(1)
+    14:		}
+    15:	
+    16:		arg := os.Args[1]
+    17:	
+=>  18:		fmt.Printf("The last character in that word is: %c\n", arg[len(arg)])
+    19:	}
+(dlv) frame 3 locals
+arg = "debugging is so fun"
+(dlv) frame 3 print len(arg)
+19
+(dlv) frame 3 print arg[19]
+(dlv) frame 3 edit
+(dlv) rebuild
+(dlv) continue
+(dlv) exit

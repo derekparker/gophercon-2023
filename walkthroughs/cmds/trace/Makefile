@@ -3,7 +3,7 @@ bin/traceme:
 
 .PHONY: trace
 trace:
-	dlv trace "^main.doWork$"
+	dlv trace "^main.doWork$$"
 
 .PHONY: trace-with-stack
 trace-with-stack:

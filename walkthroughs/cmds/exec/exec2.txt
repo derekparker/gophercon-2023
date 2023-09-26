@@ -1,0 +1,141 @@
+(dlv) break Rectangle.Width
+Breakpoint 1 set at 0x104a03010 for main.(*Rectangle).Width() ./main.go:16
+(dlv) break Rectangle.Area
+Breakpoint 2 set at 0x104a0304c for main.(*Rectangle).Area() ./main.go:20
+(dlv) continue main.main
+Breakpoint 3 set at 0x104a030b0 for main.main() ./main.go:22
+> main.main() ./main.go:22 (hits goroutine(1):1 total:1) (PC: 0x104a030b0)
+    17:		return 6
+    18:	}
+    19:	
+    20:	func (r *Rectangle) Area() int { return r.Height() * r.Width() }
+    21:	
+=>  22:	func main() {
+    23:		var r Rectangle
+    24:		runtime.Breakpoint()
+    25:		fmt.Println(r.Area())
+    26:		fmt.Println(r.Area() * 2)
+    27:		fmt.Println(r.Area() * 3)
+(dlv) disassemble
+TEXT main.main(SB) /Users/derekparker/Code/gophercon-2023/walkthroughs/cmds/exec/main.go
+	main.go:22	0x104a030a0	900b40f9	MOVD 16(R28), R16
+	main.go:22	0x104a030a4	f10301d1	SUB $64, RSP, R17
+	main.go:22	0x104a030a8	3f0210eb	CMP R16, R17
+	main.go:22	0x104a030ac	090e0054	BLS 112(PC)
+=>	main.go:22	0x104a030b0	fe0f14f8	MOVD.W R30, -192(RSP)
+	main.go:22	0x104a030b4	fd831ff8	MOVD R29, -8(RSP)
+	main.go:22	0x104a030b8	fd2300d1	SUB $8, RSP, R29
+	main.go:24	0x104a030bc	596dfe97	CALL runtime.Breakpoint(SB)
+	main.go:25	0x104a030c0	e0a30091	ADD $40, RSP, R0
+	main.go:25	0x104a030c4	dfffff97	CALL main.(*Rectangle).Area(SB)
+	main.go:25	0x104a030c8	e01700f9	MOVD R0, 40(RSP)
+	main.go:25	0x104a030cc	ff7f06a9	STP (ZR, ZR), 96(RSP)
+	main.go:25	0x104a030d0	e0830191	ADD $96, RSP, R0
+	main.go:25	0x104a030d4	e02700f9	MOVD R0, 72(RSP)
+	main.go:25	0x104a030d8	e01740f9	MOVD 40(RSP), R0
+	main.go:25	0x104a030dc	a99afd97	CALL runtime.convT64(SB)
+	main.go:25	0x104a030e0	e02300f9	MOVD R0, 64(RSP)
+	main.go:25	0x104a030e4	e12740f9	MOVD 72(RSP), R1
+	main.go:25	0x104a030e8	3b008039	MOVB (R1), R27
+	main.go:25	0x104a030ec	c2000090	ADRP 98304(PC), R2
+	main.go:25	0x104a030f0	42002d91	ADD $2880, R2, R2
+	main.go:25	0x104a030f4	220000f9	MOVD R2, (R1)
+	main.go:25	0x104a030f8	bb0600d0	ADRP 876544(PC), R27
+	main.go:25	0x104a030fc	621349b9	MOVWU 2320(R27), R2
+	main.go:25	0x104a03100	42000034	CBZW R2, 2(PC)
+	main.go:25	0x104a03104	02000014	JMP 2(PC)
+	main.go:25	0x104a03108	06000014	JMP 6(PC)
+	main.go:25	0x104a0310c	a9f6fe97	CALL runtime.gcWriteBarrier2(SB)
+	main.go:25	0x104a03110	200300f9	MOVD R0, (R25)
+	main.go:25	0x104a03114	230440f9	MOVD 8(R1), R3
+	main.go:25	0x104a03118	230700f9	MOVD R3, 8(R25)
+	main.go:25	0x104a0311c	01000014	JMP 1(PC)
+	main.go:25	0x104a03120	200400f9	MOVD R0, 8(R1)
+	main.go:25	0x104a03124	e02740f9	MOVD 72(RSP), R0
+	main.go:25	0x104a03128	1b008039	MOVB (R0), R27
+	main.go:25	0x104a0312c	01000014	JMP 1(PC)
+	main.go:25	0x104a03130	e05300f9	MOVD R0, 160(RSP)
+	main.go:25	0x104a03134	e20340b2	ORR $1, ZR, R2
+	main.go:25	0x104a03138	e25700f9	MOVD R2, 168(RSP)
+	main.go:25	0x104a0313c	e25b00f9	MOVD R2, 176(RSP)
+	main.go:25	0x104a03140	e10302aa	MOVD R2, R1
+	main.go:25	0x104a03144	87edff97	CALL fmt.Println(SB)
+	main.go:26	0x104a03148	e0a30091	ADD $40, RSP, R0
+	main.go:26	0x104a0314c	bdffff97	CALL main.(*Rectangle).Area(SB)
+	main.go:26	0x104a03150	e01700f9	MOVD R0, 40(RSP)
+	main.go:26	0x104a03154	ff7f06a9	STP (ZR, ZR), 96(RSP)
+	main.go:26	0x104a03158	e3830191	ADD $96, RSP, R3
+	main.go:26	0x104a0315c	e31f00f9	MOVD R3, 56(RSP)
+	main.go:26	0x104a03160	e31740f9	MOVD 40(RSP), R3
+	main.go:26	0x104a03164	60f87fd3	LSL $1, R3, R0
+	main.go:26	0x104a03168	869afd97	CALL runtime.convT64(SB)
+	main.go:26	0x104a0316c	e01b00f9	MOVD R0, 48(RSP)
+	main.go:26	0x104a03170	e31f40f9	MOVD 56(RSP), R3
+	main.go:26	0x104a03174	7b008039	MOVB (R3), R27
+	main.go:26	0x104a03178	c4000090	ADRP 98304(PC), R4
+	main.go:26	0x104a0317c	84002d91	ADD $2880, R4, R4
+	main.go:26	0x104a03180	640000f9	MOVD R4, (R3)
+	main.go:26	0x104a03184	bb0600d0	ADRP 876544(PC), R27
+	main.go:26	0x104a03188	641349b9	MOVWU 2320(R27), R4
+	main.go:26	0x104a0318c	44000034	CBZW R4, 2(PC)
+	main.go:26	0x104a03190	02000014	JMP 2(PC)
+	main.go:26	0x104a03194	06000014	JMP 6(PC)
+	main.go:26	0x104a03198	86f6fe97	CALL runtime.gcWriteBarrier2(SB)
+	main.go:26	0x104a0319c	200300f9	MOVD R0, (R25)
+	main.go:26	0x104a031a0	640440f9	MOVD 8(R3), R4
+	main.go:26	0x104a031a4	240700f9	MOVD R4, 8(R25)
+	main.go:26	0x104a031a8	01000014	JMP 1(PC)
+	main.go:26	0x104a031ac	600400f9	MOVD R0, 8(R3)
+	main.go:26	0x104a031b0	e01f40f9	MOVD 56(RSP), R0
+	main.go:26	0x104a031b4	1b008039	MOVB (R0), R27
+	main.go:26	0x104a031b8	01000014	JMP 1(PC)
+	main.go:26	0x104a031bc	e04700f9	MOVD R0, 136(RSP)
+	main.go:26	0x104a031c0	e20340b2	ORR $1, ZR, R2
+	main.go:26	0x104a031c4	e24b00f9	MOVD R2, 144(RSP)
+	main.go:26	0x104a031c8	e24f00f9	MOVD R2, 152(RSP)
+	main.go:26	0x104a031cc	e10302aa	MOVD R2, R1
+	main.go:26	0x104a031d0	64edff97	CALL fmt.Println(SB)
+	main.go:27	0x104a031d4	e0a30091	ADD $40, RSP, R0
+	main.go:27	0x104a031d8	9affff97	CALL main.(*Rectangle).Area(SB)
+	main.go:27	0x104a031dc	e01700f9	MOVD R0, 40(RSP)
+	main.go:27	0x104a031e0	ff7f06a9	STP (ZR, ZR), 96(RSP)
+	main.go:27	0x104a031e4	e3830191	ADD $96, RSP, R3
+	main.go:27	0x104a031e8	e32f00f9	MOVD R3, 88(RSP)
+	main.go:27	0x104a031ec	e31740f9	MOVD 40(RSP), R3
+	main.go:27	0x104a031f0	6004038b	ADD R3<<1, R3, R0
+	main.go:27	0x104a031f4	639afd97	CALL runtime.convT64(SB)
+	main.go:27	0x104a031f8	e02b00f9	MOVD R0, 80(RSP)
+	main.go:27	0x104a031fc	e32f40f9	MOVD 88(RSP), R3
+	main.go:27	0x104a03200	7b008039	MOVB (R3), R27
+	main.go:27	0x104a03204	c4000090	ADRP 98304(PC), R4
+	main.go:27	0x104a03208	84002d91	ADD $2880, R4, R4
+	main.go:27	0x104a0320c	640000f9	MOVD R4, (R3)
+	main.go:27	0x104a03210	bb0600d0	ADRP 876544(PC), R27
+	main.go:27	0x104a03214	641349b9	MOVWU 2320(R27), R4
+	main.go:27	0x104a03218	44000034	CBZW R4, 2(PC)
+	main.go:27	0x104a0321c	02000014	JMP 2(PC)
+	main.go:27	0x104a03220	06000014	JMP 6(PC)
+	main.go:27	0x104a03224	63f6fe97	CALL runtime.gcWriteBarrier2(SB)
+	main.go:27	0x104a03228	200300f9	MOVD R0, (R25)
+	main.go:27	0x104a0322c	640440f9	MOVD 8(R3), R4
+	main.go:27	0x104a03230	240700f9	MOVD R4, 8(R25)
+	main.go:27	0x104a03234	01000014	JMP 1(PC)
+	main.go:27	0x104a03238	600400f9	MOVD R0, 8(R3)
+	main.go:27	0x104a0323c	e02f40f9	MOVD 88(RSP), R0
+	main.go:27	0x104a03240	1b008039	MOVB (R0), R27
+	main.go:27	0x104a03244	01000014	JMP 1(PC)
+	main.go:27	0x104a03248	e03b00f9	MOVD R0, 112(RSP)
+	main.go:27	0x104a0324c	e20340b2	ORR $1, ZR, R2
+	main.go:27	0x104a03250	e23f00f9	MOVD R2, 120(RSP)
+	main.go:27	0x104a03254	e24300f9	MOVD R2, 128(RSP)
+	main.go:27	0x104a03258	e10302aa	MOVD R2, R1
+	main.go:27	0x104a0325c	41edff97	CALL fmt.Println(SB)
+	main.go:28	0x104a03260	fdfb7fa9	LDP -8(RSP), (R29, R30)
+	main.go:28	0x104a03264	ff030391	ADD $192, RSP, RSP
+	main.go:28	0x104a03268	c0035fd6	RET
+	main.go:22	0x104a0326c	e3031eaa	MOVD R30, R3
+	main.go:22	0x104a03270	64edfe97	CALL runtime.morestack_noctxt(SB)
+	main.go:22	0x104a03274	8bffff17	JMP main.main(SB)
+	main.go:22	0x104a03278	00000000	?
+	main.go:22	0x104a0327c	00000000	?
+(dlv) exit

@@ -1,0 +1,7 @@
+(dlv) break Rectangle.Area
+Breakpoint 1 set at 0x100773ec0,0x100773f20,0x100773f84 for main.main() <multiple locations>:0
+(dlv) break Rectangle.Width
+(dlv) funcs Rectangle
+main.(*Rectangle).Area
+main.(*Rectangle).Height
+(dlv) exit

@@ -1,0 +1,344 @@
+(dlv) restart
+Process restarted with PID 54145
+(dlv) breakpoints
+Breakpoint runtime-fatal-throw (enabled) at 0x104a7f230,0x104a7f2f0,0x104a95b5c for (multiple functions)() <multiple locations>:0 (0)
+Breakpoint unrecovered-panic (enabled) at 0x104a7f5c0 for runtime.fatalpanic() /Users/derekparker/Code/goroot/src/runtime/panic.go:1188 (0)
+	print runtime.curg._panic.arg
+Breakpoint 1 (enabled) at 0x104c35000 for github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:20 (0)
+(dlv) continue
+> github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:20 (hits goroutine(6):1 total:1) (PC: 0x104c35000)
+    15:	}
+    16:	
+    17:	// ParseURLsFromFile takes a path to a text file containing
+    18:	// newline delimited URLs and parses them into Job structs
+    19:	// which can be passed to workers.
+=>  20:	func ParseURLsFromFile(path string) ([]*Job, error) {
+    21:		f, err := os.Open(path)
+    22:		if err != nil {
+    23:			return nil, err
+    24:		}
+    25:		defer f.Close()
+(dlv) next
+> github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:21 (PC: 0x104c35024)
+    16:	
+    17:	// ParseURLsFromFile takes a path to a text file containing
+    18:	// newline delimited URLs and parses them into Job structs
+    19:	// which can be passed to workers.
+    20:	func ParseURLsFromFile(path string) ([]*Job, error) {
+=>  21:		f, err := os.Open(path)
+    22:		if err != nil {
+    23:			return nil, err
+    24:		}
+    25:		defer f.Close()
+    26:	
+(dlv) next 3
+> github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:27 (PC: 0x104c35100)
+    22:		if err != nil {
+    23:			return nil, err
+    24:		}
+    25:		defer f.Close()
+    26:	
+=>  27:		b, err := io.ReadAll(f)
+    28:		if err != nil {
+    29:			return nil, err
+    30:		}
+    31:		list := string(b)
+    32:		urls := strings.Split(list, "\n")
+(dlv) next
+> github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:28 (PC: 0x104c35184)
+    23:			return nil, err
+    24:		}
+    25:		defer f.Close()
+    26:	
+    27:		b, err := io.ReadAll(f)
+=>  28:		if err != nil {
+    29:			return nil, err
+    30:		}
+    31:		list := string(b)
+    32:		urls := strings.Split(list, "\n")
+    33:	
+(dlv) 
+> github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:31 (PC: 0x104c351d0)
+    26:	
+    27:		b, err := io.ReadAll(f)
+    28:		if err != nil {
+    29:			return nil, err
+    30:		}
+=>  31:		list := string(b)
+    32:		urls := strings.Split(list, "\n")
+    33:	
+    34:		jobs := make([]*Job, len(urls))
+    35:		for _, url := range urls {
+    36:			jobs = append(jobs, &Job{Url: url})
+(dlv) 
+> github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:32 (PC: 0x104c351e8)
+    27:		b, err := io.ReadAll(f)
+    28:		if err != nil {
+    29:			return nil, err
+    30:		}
+    31:		list := string(b)
+=>  32:		urls := strings.Split(list, "\n")
+    33:	
+    34:		jobs := make([]*Job, len(urls))
+    35:		for _, url := range urls {
+    36:			jobs = append(jobs, &Job{Url: url})
+    37:		}
+(dlv) 
+> github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:34 (PC: 0x104c35204)
+    29:			return nil, err
+    30:		}
+    31:		list := string(b)
+    32:		urls := strings.Split(list, "\n")
+    33:	
+=>  34:		jobs := make([]*Job, len(urls))
+    35:		for _, url := range urls {
+    36:			jobs = append(jobs, &Job{Url: url})
+    37:		}
+    38:	
+    39:		return jobs, nil
+(dlv) 
+> github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:35 (PC: 0x104c3522c)
+    30:		}
+    31:		list := string(b)
+    32:		urls := strings.Split(list, "\n")
+    33:	
+    34:		jobs := make([]*Job, len(urls))
+=>  35:		for _, url := range urls {
+    36:			jobs = append(jobs, &Job{Url: url})
+    37:		}
+    38:	
+    39:		return jobs, nil
+    40:	}
+(dlv) print jobs
+[]*github.com/derekparker/gophercon-2023/count.Job len: 4, cap: 4, [
+	*nil,
+	*nil,
+	*nil,
+	*nil,
+]
+(dlv) n
+> github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:36 (PC: 0x104c352ac)
+    31:		list := string(b)
+    32:		urls := strings.Split(list, "\n")
+    33:	
+    34:		jobs := make([]*Job, len(urls))
+    35:		for _, url := range urls {
+=>  36:			jobs = append(jobs, &Job{Url: url})
+    37:		}
+    38:	
+    39:		return jobs, nil
+    40:	}
+    41:	
+(dlv) 
+> github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:35 (PC: 0x104c35374)
+    30:		}
+    31:		list := string(b)
+    32:		urls := strings.Split(list, "\n")
+    33:	
+    34:		jobs := make([]*Job, len(urls))
+=>  35:		for _, url := range urls {
+    36:			jobs = append(jobs, &Job{Url: url})
+    37:		}
+    38:	
+    39:		return jobs, nil
+    40:	}
+(dlv) 
+> github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:36 (PC: 0x104c352ac)
+    31:		list := string(b)
+    32:		urls := strings.Split(list, "\n")
+    33:	
+    34:		jobs := make([]*Job, len(urls))
+    35:		for _, url := range urls {
+=>  36:			jobs = append(jobs, &Job{Url: url})
+    37:		}
+    38:	
+    39:		return jobs, nil
+    40:	}
+    41:	
+(dlv) 
+> github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:35 (PC: 0x104c35374)
+    30:		}
+    31:		list := string(b)
+    32:		urls := strings.Split(list, "\n")
+    33:	
+    34:		jobs := make([]*Job, len(urls))
+=>  35:		for _, url := range urls {
+    36:			jobs = append(jobs, &Job{Url: url})
+    37:		}
+    38:	
+    39:		return jobs, nil
+    40:	}
+(dlv) 
+> github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:36 (PC: 0x104c352ac)
+    31:		list := string(b)
+    32:		urls := strings.Split(list, "\n")
+    33:	
+    34:		jobs := make([]*Job, len(urls))
+    35:		for _, url := range urls {
+=>  36:			jobs = append(jobs, &Job{Url: url})
+    37:		}
+    38:	
+    39:		return jobs, nil
+    40:	}
+    41:	
+(dlv) print jobs
+[]*github.com/derekparker/gophercon-2023/count.Job len: 6, cap: 8, [
+	*nil,
+	*nil,
+	*nil,
+	*nil,
+	*{
+		Url: "http://yahoo.com",},
+	*{
+		Url: "http://go.dev",},
+]
+(dlv) display -a jobs
+0: jobs = []*github.com/derekparker/gophercon-2023/count.Job len: 6, cap: 8, [...]
+(dlv) n
+> github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:35 (PC: 0x104c35374)
+    30:		}
+    31:		list := string(b)
+    32:		urls := strings.Split(list, "\n")
+    33:	
+    34:		jobs := make([]*Job, len(urls))
+=>  35:		for _, url := range urls {
+    36:			jobs = append(jobs, &Job{Url: url})
+    37:		}
+    38:	
+    39:		return jobs, nil
+    40:	}
+0: jobs = []*github.com/derekparker/gophercon-2023/count.Job len: 7, cap: 8, [...]
+(dlv) 
+> github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:36 (PC: 0x104c352ac)
+    31:		list := string(b)
+    32:		urls := strings.Split(list, "\n")
+    33:	
+    34:		jobs := make([]*Job, len(urls))
+    35:		for _, url := range urls {
+=>  36:			jobs = append(jobs, &Job{Url: url})
+    37:		}
+    38:	
+    39:		return jobs, nil
+    40:	}
+    41:	
+0: jobs = []*github.com/derekparker/gophercon-2023/count.Job len: 7, cap: 8, [...]
+(dlv) 
+> github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:35 (PC: 0x104c35374)
+    30:		}
+    31:		list := string(b)
+    32:		urls := strings.Split(list, "\n")
+    33:	
+    34:		jobs := make([]*Job, len(urls))
+=>  35:		for _, url := range urls {
+    36:			jobs = append(jobs, &Job{Url: url})
+    37:		}
+    38:	
+    39:		return jobs, nil
+    40:	}
+0: jobs = []*github.com/derekparker/gophercon-2023/count.Job len: 8, cap: 8, [...]
+(dlv) edit
+(dlv) rebuild
+0: jobs = error unable to find function context
+(dlv) help display
+Print value of an expression every time the program stops.
+
+	display -a [%format] <expression>
+	display -d <number>
+
+The '-a' option adds an expression to the list of expression printed every time the program stops. The '-d' option removes the specified expression from the list.
+
+If display is called without arguments it will print the value of all expression in the list.
+(dlv) display -d 0
+(dlv) breakpoints
+Breakpoint runtime-fatal-throw (enabled) at 0x10064f230,0x10064f2f0,0x100665b5c for (multiple functions)() <multiple locations>:0 (0)
+Breakpoint unrecovered-panic (enabled) at 0x10064f5c0 for runtime.fatalpanic() /Users/derekparker/Code/goroot/src/runtime/panic.go:1188 (0)
+	print runtime.curg._panic.arg
+Breakpoint 1 (enabled) at 0x100805000 for github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:20 (0)
+(dlv) clearall
+Breakpoint 1 cleared at 0x100805000 for github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:20
+(dlv) continue
+(dlv) break ParseURLsFromFile
+(dlv) restart
+Process restarted with PID 54447
+(dlv) break ParseURLsFromFile
+Breakpoint 2 set at 0x1030d1000 for github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:20
+(dlv) continue
+> github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:20 (hits goroutine(6):1 total:1) (PC: 0x1030d1000)
+    15:	}
+    16:	
+    17:	// ParseURLsFromFile takes a path to a text file containing
+    18:	// newline delimited URLs and parses them into Job structs
+    19:	// which can be passed to workers.
+=>  20:	func ParseURLsFromFile(path string) ([]*Job, error) {
+    21:		f, err := os.Open(path)
+    22:		if err != nil {
+    23:			return nil, err
+    24:		}
+    25:		defer f.Close()
+(dlv) stepout
+> github.com/derekparker/gophercon-2023/count.TestParseURLsFromFile() ./count/count_test.go:10 (PC: 0x1030d14a0)
+Values returned:
+	~r0: []*github.com/derekparker/gophercon-2023/count.Job len: 4, cap: 4, [
+		*{
+			Url: "http://yahoo.com",},
+		*{
+			Url: "http://go.dev",},
+		*{
+			Url: "http://bing.com",},
+		*{
+			Url: "http://github.com",},
+	]
+	~r1: error nil
+
+     5:	
+     6:		"github.com/stretchr/testify/assert"
+     7:	)
+     8:	
+     9:	func TestParseURLsFromFile(t *testing.T) {
+=>  10:		jobs, err := ParseURLsFromFile("./testdata/urls.txt")
+    11:		assert.Nil(t, err)
+    12:	
+    13:		// Assert the URLs are parsed in the correct order as we expect.
+    14:		assert.Equal(t, "http://google.com", jobs[0].Url)
+    15:		assert.Equal(t, "http://yahoo.com", jobs[1].Url)
+(dlv) next
+> github.com/derekparker/gophercon-2023/count.TestParseURLsFromFile() ./count/count_test.go:11 (PC: 0x1030d1504)
+     6:		"github.com/stretchr/testify/assert"
+     7:	)
+     8:	
+     9:	func TestParseURLsFromFile(t *testing.T) {
+    10:		jobs, err := ParseURLsFromFile("./testdata/urls.txt")
+=>  11:		assert.Nil(t, err)
+    12:	
+    13:		// Assert the URLs are parsed in the correct order as we expect.
+    14:		assert.Equal(t, "http://google.com", jobs[0].Url)
+    15:		assert.Equal(t, "http://yahoo.com", jobs[1].Url)
+    16:		assert.Equal(t, "http://go.dev", jobs[2].Url)
+(dlv) print jobs
+[]*github.com/derekparker/gophercon-2023/count.Job len: 4, cap: 4, [
+	*{
+		Url: "http://yahoo.com",},
+	*{
+		Url: "http://go.dev",},
+	*{
+		Url: "http://bing.com",},
+	*{
+		Url: "http://github.com",},
+]
+(dlv) rebuild
+(dlv) c
+Switch target process from 54447 to 54556 (/Users/derekparker/Code/gophercon-2023/debug.test3742861120)
+> github.com/derekparker/gophercon-2023/count.ParseURLsFromFile() ./count/count.go:20 (hits goroutine(4):1 total:1) (PC: 0x104aa9000)
+    15:	}
+    16:	
+    17:	// ParseURLsFromFile takes a path to a text file containing
+    18:	// newline delimited URLs and parses them into Job structs
+    19:	// which can be passed to workers.
+=>  20:	func ParseURLsFromFile(path string) ([]*Job, error) {
+    21:		f, err := os.Open(path)
+    22:		if err != nil {
+    23:			return nil, err
+    24:		}
+    25:		defer f.Close()
+(dlv) c
+(dlv) exit

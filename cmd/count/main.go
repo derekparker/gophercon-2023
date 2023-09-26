@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"sync"
 	"time"
 
@@ -17,6 +18,8 @@ func countHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println("Url Param 'urls' is missing")
 		return
 	}
+
+	urls = strings.Split(urls, ",")
 
 	var (
 		wg          sync.WaitGroup
